@@ -7,13 +7,29 @@ node {
         checkout scm
     }
 
-    stage('Build image') {
-        /* This builds the actual image; synonymous to
-         * docker build on the command line */
+    #!groovy
 
-        app = docker.build("danaasa/danaasa1")
+pipeline {
+	agent none
+  stages {
+  	stage('Maven Install') {
+    	agent {
+      	docker {
+        	image 'maven:3.5.0'
+        }
+      }
+      steps {
+      	sh 'mvn clean install'
+      }
     }
-
+    stage('Docker Build') {
+    	agent any
+      steps {
+      	sh 'docker build -t shanem/spring-petclinic:latest .'
+      }
+    }
+  }
+}
     stage('Test image') {
         /* Ideally, we would run a test framework against our image.
          * For this example, we're using a Volkswagen-type approach ;-) */
