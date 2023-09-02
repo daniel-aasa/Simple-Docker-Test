@@ -1,5 +1,5 @@
 # use a node base image
-FROM node:bookworm
+FROM node:node-windows
 
 # set maintainer
 LABEL maintainer "daniel"
