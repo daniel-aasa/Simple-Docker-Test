@@ -7,8 +7,6 @@ node {
         checkout scm
     }
 
-    #!groovy
-
 pipeline {
 	agent none
   stages {
